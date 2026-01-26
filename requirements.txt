@@ -1,0 +1,6 @@
+pandas
+streamlit
+notebook
+opencv-python-headless
+transformers
+torch
