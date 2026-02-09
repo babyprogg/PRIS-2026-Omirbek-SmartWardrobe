@@ -1,4 +1,31 @@
 import streamlit as st
+from data_manager import InventoryManager
+
+# Инициализируем менеджер данных
+data_path = "data/raw/inventory.csv"
+manager = InventoryManager(data_path)
+
+# В боковом меню добавим новую страницу
+page = st.sidebar.selectbox("Выберите этап:", ["Главная", "Мой Шкаф", "Загрузка одежды", "Правила стиля"])
+
+if page == "Мой Шкаф":
+    st.header("📦 Содержимое вашего гардероба")
+    
+    # Показываем таблицу из CSV через pandas
+    st.dataframe(manager.data)
+    
+    st.subheader("Добавить новую вещь")
+    with st.form("add_item_form"):
+        name = st.text_input("Название")
+        cat = st.selectbox("Категория", ["Top", "Bottom", "Shoes"])
+        clr = st.selectbox("Цвет", ["Белый", "Черный", "Синий", "Бежевый", "Красный"])
+        submit = st.form_submit_button("Сохранить в базу")
+        
+        if submit:
+            new_item = {"id": len(manager.data)+1, "name": name, "category": cat, "color": clr}
+            manager.add_item(new_item)
+            st.success("Вещь добавлена!")
+            st.rerun()
 
 # Заголовок приложения
 st.title("AI Smart Wardrobe")
