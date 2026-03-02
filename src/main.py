@@ -2,12 +2,14 @@ import streamlit as st
 from data_manager import InventoryManager
 from logic import Garment, StyleExpert
 from nlp_engine import NLPEngine
+from cv_engine import CVEngine
 
 # 1. Инициализация систем
 data_path = "data/raw/inventory.csv"
 manager = InventoryManager(data_path)
 expert = StyleExpert()
 nlp = NLPEngine()
+cv = CVEngine()
 
 # Настройка страницы
 st.set_page_config(page_title="AI Smart Wardrobe", page_icon="👔")
@@ -63,22 +65,40 @@ elif page == "Подбор образа":
     col1, col2 = st.columns(2)
     with col1:
         top_color = st.selectbox("Цвет верха", ["Белый", "Черный", "Синий", "Бежевый"])
-        top_item = Garment("Верх", "Top", top_color)
+        # top_item = Garment("Верх", "Top", top_color)
     with col2:
         bottom_color = st.selectbox("Цвет низа", ["Черный", "Белый", "Синий", "Бежевый"])
-        bottom_item = Garment("Низ", "Bottom", bottom_color)
+        # bottom_item = Garment("Низ", "Bottom", bottom_color)
     
     if st.button("Проверить сочетание"):
-        is_ok, message = expert.check_combination(top_item, bottom_item)
+        item1 = Garment("Верх", "Top", top_color)
+        item2 = Garment("Низ", "Bottom", bottom_color)
+        is_ok, message = expert.check_combination(item1, item2)
         if is_ok:
             st.success(message)
         else:
             st.warning(message)
 
-# --- СТРАНИЦА: ЗАГРУЗКА ОДЕЖДЫ (Задел на CV) ---
+# --- СТРАНИЦА: ЗАГРУЗКА ОДЕЖДЫ ---
 elif page == "Загрузка одежды":
     st.header("📸 Распознавание вещей")
     uploaded_file = st.file_uploader("Загрузите фото вещи для анализа...", type=["jpg", "png", "jpeg"])
+    
     if uploaded_file is not None:
         st.image(uploaded_file, caption='Загруженное изображение', use_column_width=True)
-        st.info("💡 На следующей лабе (CV) здесь будет работать нейросеть для авто-определения цвета и типа.")
+        
+        if st.button("🚀 Начать анализ изображения"):
+            with st.spinner('Нейросеть анализирует изображение...'):
+                img_bytes = uploaded_file.getvalue()
+                result = cv.process_image(img_bytes)
+                
+                if result:
+                    st.success("Анализ завершен!")
+                    st.write(f"🎨 **Определенный цвет**: {result['color']}")
+                    
+                    if result['text']:
+                        st.write(f"📝 **Найденный текст на бирках**: {', '.join(result['text'])}")
+                    
+                    st.info("💡 Вы можете сохранить эту вещь в гардероб, подтвердив данные в разделе 'Мой Шкаф'.")
+                else:
+                    st.error("Ошибка при обработке изображения.")

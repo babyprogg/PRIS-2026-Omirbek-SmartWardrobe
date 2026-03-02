@@ -4,3 +4,5 @@ notebook
 opencv-python-headless
 transformers
 torch
+natasha
+easyocr
