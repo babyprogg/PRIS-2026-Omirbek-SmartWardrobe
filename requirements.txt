@@ -1,8 +1,10 @@
 pandas
 streamlit
+streamlit-option-menu
 notebook
 opencv-python-headless
-transformers
-torch
+setuptools==80.9.0
 natasha
-easyocr
+scikit-learn
+thefuzz[speedup]
+sentence-transformers

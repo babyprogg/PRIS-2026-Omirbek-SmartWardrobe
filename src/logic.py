@@ -19,20 +19,31 @@ class StyleExpert:
                 return json.load(f)
         return {"color_matches": {}, "occasions": {}}
 
+    @staticmethod
+    def _norm_color(color):
+        return (color or "").strip().capitalize()
+
     def check_combination(self, item1, item2):
         # Достаем список сочетаний из загруженного JSON
         matches = self.rules.get("color_matches", {})
+        c1 = self._norm_color(item1.color)
+        c2 = self._norm_color(item2.color)
         
-        if item1.color in matches.get(item2.color, []) or \
-           item2.color in matches.get(item1.color, []):
-            return True, "✅ Эти цвета отлично сочетаются!"
+        if c1 in matches.get(c2, []) or c2 in matches.get(c1, []):
+            return True, f"✅ {c1} и {c2} отлично сочетаются по правилам стиля."
         
-        if item1.color == item2.color:
-            return True, "⚪ Монохромный образ — это стильно."
+        if c1 == c2:
+            return True, "⚪ Монохромный образ выглядит собранно и современно."
         
-        return False, "⚠️ Сочетание может выглядеть спорно."
+        return False, f"⚠️ Пара {c1} + {c2} может выглядеть спорно. Лучше добавить нейтральный слой или аксессуар."
 
     def get_recommendation(self, occasion):
         # Достаем советы из загруженного JSON
         recommendations = self.rules.get("occasions", {})
-        return recommendations.get(occasion, "Просто оденьтесь по погоде!")
+        base = recommendations.get(occasion, "Ориентируйтесь на погоду и комфорт.")
+        extra = {
+            "Свадьба": " Добавьте аккуратные аксессуары и избегайте полностью белого образа.",
+            "Работа": " Сделайте акцент на чистых линиях и спокойной палитре.",
+            "Прогулка": " Выбирайте дышащие материалы и удобную обувь.",
+        }
+        return base + extra.get(occasion, "")

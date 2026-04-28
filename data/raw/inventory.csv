@@ -1,7 +1,21 @@
-id,name,category,color,material,style
-1,White Shirt,Top,Белый,Cotton,Formal
-2,Blue Jeans,Bottom,Синий,Denim,Casual
-3,Black Blazer,Top,Черный,Wool,Formal
-4,Beige Chinos,Bottom,Бежевый,Cotton,Casual
-5,Red Dress,Top,Красный,Silk,Formal
-6,белая рубашка,Top,Белый,,
+id,name,category,color,material,style,image_path
+1,Белая классическая рубашка,Top,Белый,Хлопок,Formal,
+2,Чёрные классические брюки,Bottom,Черный,Шерсть,Formal,
+3,Синие джинсы,Bottom,Синий,Деним,Casual,
+4,Белая футболка,Top,Белый,Хлопок,Casual,
+5,Серый свитер,Top,Серый,Шерсть,Casual,
+6,Бежевые чинос,Bottom,Бежевый,Хлопок,Smart Casual,
+7,Чёрная водолазка,Top,Черный,Шерсть,Smart Casual,
+8,Белые кроссовки,Shoes,Белый,Кожа,Casual,
+9,Чёрные оксфорды,Shoes,Черный,Кожа,Formal,
+10,Синий блейзер,Top,Синий,Шерсть,Smart Casual,
+12,Бежевый тренч,Top,Бежевый,Полиэстер,Smart Casual,
+13,Чёрная спортивная футболка,Top,Черный,Полиэстер,Sport,
+14,Серые спортивные шорты,Bottom,Серый,Полиэстер,Sport,
+15,Белые кеды,Shoes,Белый,Холст,Casual,
+16,Футболка Радиохед,Top,Черный,Хлопок,Casual,
+18,Свитер Зеленый,Top,Зеленый,Хлопок,Casual,
+19,Серая Футболка с Пинтереста,Top,Серый,Хлопок,Casual,data/images/vision_2e0181a977.jpg
+20,Синяя Футболка с Пинтереста,Top,Серый,Хлопок,Casual,data/images/vision_1fa6908f6a.jpg
+21,Черные Штаны с Пинт,Bottom,Серый,Хлопок,Sport,data/images/vision_90a7df7a3f.jpg
+22,Серая Кофта с Воротником с Пинт,Top,Серый,Шерсть,Casual,data/images/vision_9ffc48b821.jpg
